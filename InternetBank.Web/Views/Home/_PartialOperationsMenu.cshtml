@@ -1,0 +1,14 @@
+﻿<script type="text/html" id="operations-menu-item-template">
+    <div class="operations-menu-item">
+        <a href="#" data-bind="text: Name, css: { 'operation-category': !IsService }, attr: { href: IsService ? '#' : null }, click: IsService ? $root.onServiceClick : null"></a>
+        <div class="operations-menu-children" data-bind="foreach: Children">
+            <div data-bind="template: { name: 'operations-menu-item-template', data: $data }"></div>
+        </div>
+    </div>
+</script>
+
+<div class="operations-menu">
+    <div data-bind="foreach: operations">
+        <div data-bind="template: { name: 'operations-menu-item-template', data: $data }"></div>
+    </div>
+</div>

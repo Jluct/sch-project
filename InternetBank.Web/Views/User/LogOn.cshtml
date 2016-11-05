@@ -1,0 +1,95 @@
+﻿@using InternetBank.Resources;
+
+@model InternetBank.Models.LogOnModel
+
+@{
+    ViewBag.Title = "LogOn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .field-validation-error {
+        color: red;
+    }
+    .orange {
+        color: rgb(255, 174, 0);
+        font-weight: 800;
+    }
+</style>
+
+<table>
+    <tr>
+        <td width="240" style="padding: 10px;">
+
+            @using (Html.BeginForm("LogOn", "User", FormMethod.Post, new { style="background-color: rgb(255, 174, 0)" }))
+            {
+                @Html.AntiForgeryToken();
+                <table>
+                    <tr>
+                        <td colspan="3">
+                            <label>@Html.ValidationMessage("Common")</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>@GlobalResources.Login</label>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Login)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @Html.ValidationMessageFor(model => model.Login)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>@GlobalResources.Password</label>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.Password, new { type = "password" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: right; padding-right: 5px;">
+                            <input type="submit" value="@GlobalResources.LogOn" />
+                            @Html.ActionLink(@GlobalResources.Registration, "Register", "User")
+                        </td>
+                    </tr>
+                </table>
+            }
+            
+            <br />
+
+            <h3 style="margin-top: 5px;" class="orange">Инструкция</h3>
+            <p style="border: 2px rgb(255, 174, 0) solid; padding: 5px;">Для начала работы в системе введите свой логин и пароль. После входа в систему выберите интересующий Вас пункт меню, введите запрашиваемые данные, следуйте инструкциям</p>
+                        
+        </td>
+        <td style="padding: 10px;">
+            <h2 style="margin-top: 0;">Что такое «Автоматизированной системе банковских расчетов и платежей с физическими лицами»?</h2>
+            <p>«Автоматизированной системе банковских расчетов и платежей с физическими лицами» - это система удаленного обслуживания держателей банковских платежных карточек, владельцев текущих (расчетных)  счетов через сеть Интернет.</p>
+
+            <h2>Какие преимущества системы<br />
+            «Автоматизированной системе банковских расчетов и платежей с физическими лицами»?</h2>
+            
+            <p><label class="orange">Удобство</label> - система обеспечивает доступ к Вашим счетам и услугам 24 часа в сутки из любой точки мира, где есть доступ в Интернет.</p>
+            <p><label class="orange">Безопасность</label> - полная конфиденциальность взаимоотношений системы и клиента благодаря использованию современных технологий шифрования данных, а также возможности смены пароля лично Вами. При проведении платежей в системе «Автоматизированной системе банковских расчетов и платежей с физическими лицами» реквизиты Вашей карточки не используются, что позволяет избежать риска их компрометации.</p>
+            <p><label class="orange">Простота использования</label> - не нужно обладать какими-либо специальными знаниями или навыками, чтобы управлять собственными денежными средствами. Система имеет удобный и понятный любому пользователю интерфейс.</p>
+            
+            <h2>«Автоматизированной системе банковских расчетов и платежей с физическими лицами» позволяет:</h2>
+            <ul>
+                <li>контролировать собственные счета: Вы всегда сможете получить информацию об остатке денежных средств на вкладном (депозитном), текущем (расчетном) счете;</li>
+                <li>осуществлять безналичные платежи: оплатить услуги связи РУП «Белтелеком», услуги доступа в Интернет, мобильной связи (МТС, velcom, Life:), коммунальные услуги; </li>
+            </ul>
+        </td>
+        <td style="padding: 10px;">
+            @Html.Partial("_PartialSecurityRules")
+        </td>
+    </tr>
+</table>

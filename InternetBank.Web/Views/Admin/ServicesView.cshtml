@@ -1,0 +1,591 @@
+﻿@{
+    ViewBag.Title = "ServicesView";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/CustomGrid.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/tree.jquery.js")"></script>
+
+<style>
+    .services td {
+        padding: 10px;
+    }
+    ul.jqtree-tree li.jqtree-selected > .jqtree-element, ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
+        background: lightgray !important;
+        /*background: -webkit-gradient(linear, left top, left bottom, from(#BEE0F5), to(#89AFCA));
+        background: -moz-linear-gradient(top, #BEE0F5, #89AFCA);
+        background: -ms-linear-gradient(top, #BEE0F5, #89AFCA);
+        background: -o-linear-gradient(top, #BEE0F5, #89AFCA);*/
+        /*text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);*/
+    }
+</style>
+
+<h2>Услуги</h2>
+
+<table class="services">
+    <tr>
+        <td>
+            <label>Имя:</label><br />
+            <input type="text" data-bind="value: treeNodeName" /><br />
+            <label>Сервис:</label>
+            <input type="checkbox" data-bind="checked: isTreeNodeService" /><br />
+            <input type="button" data-bind="click: onAddTreeNode" value="Добавить" />&nbsp;|&nbsp;<input type="button" data-bind="click: onDeleteTreeNode" value="Удалить" />
+            <div data-bind="jqTree: { dataSource: services, selectedNodeInfo: selectedNodeInfo, onTreeNodeMoved: treeNodeMoved, onTreeNodeCanMoved: treeNodeCanMoved, onTreeNodeClicked: treeNodeClicked }"></div>
+        </td>
+        <td>
+            <!-- ko if: serviceModel() -->
+            <div data-bind="with: serviceModel()">
+                <label>Имя:</label><br />
+                <input type="text" data-bind="value: service().Name" /><br />
+                <label>Имя скрипта:</label><br />
+                <input type="text" data-bind="value: service().ScriptName" /><br />
+                <label>Имя шаблона:</label><br />
+                <input type="text" data-bind="value: service().TemplateName" /><br />
+                <label>Расположение:</label><br />
+                <select data-bind="options: $parent.localityTypesList, value: $parent.localityTypeId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <!-- ko if: $parent.localityTypeId() == window.LocalityTypes.Region -->
+                <select data-bind="options: $parent.regionsList, value: $parent.localityId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <!-- /ko -->
+                <!-- ko if: $parent.localityTypeId() == window.LocalityTypes.City -->
+                <select data-bind="options: $parent.regionsList, value: $parent.regionId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <select data-bind="options: $parent.citiesList, value: $parent.localityId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <!-- /ko -->
+                <br />
+                <input type="button" data-bind="click: onSaveService" value="Сохранить" />&nbsp;|&nbsp;<input type="button" data-bind="click: function () { $parent.serviceModel(null); }" value="Отмена" /><br /><br />
+                <input type="button" data-bind="click: addServiceParameter" value="Добавить" />
+                <div data-bind="with: parametersGrid">
+                    @Html.Partial("_PartialCustomGrid")
+                </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: serviceCategoryModel() -->
+            <div data-bind="with: serviceCategoryModel()">
+                <label>Name:</label><br />
+                <input type="text" data-bind="value: category().Name" /><br />
+                <label>Расположение:</label><br />
+                <select data-bind="options: $parent.localityTypesList, value: $parent.localityTypeId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <!-- ko if: $parent.localityTypeId() == window.LocalityTypes.Region -->
+                <select data-bind="options: $parent.regionsList, value: $parent.localityId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <!-- /ko -->
+                <!-- ko if: $parent.localityTypeId() == window.LocalityTypes.City -->
+                <select data-bind="options: $parent.regionsList, value: $parent.regionId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <select data-bind="options: $parent.citiesList, value: $parent.localityId, optionsValue: 'Id', optionsText: 'Name'"></select>
+                <!-- /ko -->
+                <br />
+                <input type="button" data-bind="click: onSaveServiceCategory" value="Сохранить" />&nbsp;|&nbsp;<input type="button" data-bind="click: function () { $parent.serviceCategoryModel(null); }" value="Отмена" />
+            </div>
+            <!-- /ko -->
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    window.ServiceViewModel = function (service, beforeSaveCallback, saveCallback)
+    {
+        var self = this;
+
+        for (var index in service)
+            service[index] = ko.observable(service[index]);
+
+        self.service = ko.observable(service);
+
+        var parameterColumns = [
+            {
+                field: "Name",
+                type: CustomGrid.columnTypes.string,
+                text: 'Имя'
+            },
+            {
+                field: "ValueType",
+                type: CustomGrid.columnTypes.list,
+                list: [
+                    {
+                        text: "String",
+                        value: window.ServiceParameterTypes.string
+                    },
+                    {
+                        text: "Integer",
+                        value: window.ServiceParameterTypes.int
+                    },
+                    {
+                        text: "Decimal",
+                        value: window.ServiceParameterTypes.decimal
+                    },
+                    {
+                        text: "Date",
+                        value: window.ServiceParameterTypes.date
+                    },
+                    {
+                        text: "Boolean",
+                        value: window.ServiceParameterTypes.boolean
+                    }
+                ],
+                valueField: "value",
+                textField: "text",
+                renderer: function (row, column)
+                {
+                    for (var i in column.list)
+                        if (column.list[i].value == row.ValueType.value())
+                            return column.list[i].text;
+                    return '';
+                },
+                text: 'Тип'
+            },
+            {
+                field: "DefaultValue",
+                text: 'Значение'
+                //renderer: function (row, column)
+                //{
+
+                //}
+                //,
+                //type: CustomGrid.columnTypes.string
+            }
+        ];
+
+        self.parametersGrid = new CustomGrid({ columns: parameterColumns, pager: { pageSize: 10 } });
+        self.parametersGrid.onApplyChanges.subscribe(function (param) { window.AdminDataProvider.SaveServiceParameter(CustomGrid.mapToEntity(param), function (id) { param.Id.value(id); }); });
+        self.parametersGrid.onApplyCancel.subscribe(function (param) { if (param.Id.value() == 0) self.parametersGrid.removeRow(param); });
+        self.parametersGrid.onBeforeDeleteRow.subscribe(function (param)
+        {
+            if (param.Id.value() == 0)
+                return true;
+            window.AdminDataProvider.DeleteServiceParameter(
+                param.Id.value(),
+                function ()
+                {
+                    self.parametersGrid.removeRow(param);
+                },
+                function ()
+                {
+                    alert('error');
+                }
+            );
+            return false;
+        });
+        
+        self.addServiceParameter = function ()
+        {
+            var param = {
+                Id: 0,
+                Name: '',
+                ValueType: window.ServiceParameterTypes.string,
+                DefaultValue: '',
+                ServiceId: service.Id()
+            };
+            self.parametersGrid.addRow(serviceParamToModel(param));
+            self.parametersGrid.pager.page(self.parametersGrid.pager.pagesCount());
+        };
+        
+        var serviceParamToModel = function (serviceParam)
+        {
+            var model = CustomGrid.mapToModel(serviceParam);
+            var initValueType = model.ValueType.value();
+            model.DefaultValue.type = ko.computed(function ()
+            {
+                var returnType = null;
+                var defaultValue = null;
+                switch (model.ValueType.value())
+                {
+                    case window.ServiceParameterTypes.string:
+                        defaultValue = '';
+                        returnType = CustomGrid.columnTypes.string;
+                        break;
+                    case window.ServiceParameterTypes.date:
+                        defaultValue = '';
+                        returnType = CustomGrid.columnTypes.date;
+                        break;
+                    case window.ServiceParameterTypes.boolean:
+                        defaultValue = false;
+                        returnType = CustomGrid.columnTypes.boolean;
+                        break;
+                    case window.ServiceParameterTypes.int:
+                        model.DefaultValue.precision = 0;
+                        defaultValue = 0;
+                        returnType = CustomGrid.columnTypes.number;
+                        break;
+                    case window.ServiceParameterTypes.decimal:
+                        model.DefaultValue.precision = 3;
+                        defaultValue = 0;
+                        returnType = CustomGrid.columnTypes.number;
+                        break;
+                }
+                if (initValueType != model.ValueType.value())
+                {
+                    model.DefaultValue.value(defaultValue);
+                    initValueType = undefined;
+                }
+                return returnType;
+            });
+            return model;
+        };
+
+        var serviceParamToModels = function (serviceParams)
+        {
+            var res = [];
+            for (var i in serviceParams)
+                res.push(serviceParamToModel(serviceParams[i]));
+            return res;
+        };
+        
+        self.onSaveService = function ()
+        {
+            var service = {};
+            for (var index in self.service())
+                service[index] = self.service()[index]();
+
+            if (typeof (beforeSaveCallback) == "function")
+                beforeSaveCallback(service);
+
+            window.AdminDataProvider.SaveOperation(service, function ()
+            {
+                if (typeof saveCallback == "function")
+                    saveCallback(service);
+            });
+        };
+
+        window.AdminDataProvider.GetServiceParameters(service.Id(), null, function (data)
+        {
+            self.parametersGrid.rows(serviceParamToModels(data));
+        });
+
+        return self;
+    };
+
+    window.ServiceCategoryViewModel = function (category, beforeSaveCallback, saveCallback)
+    {
+        var self = this;
+        
+        for (var index in category)
+            category[index] = ko.observable(category[index]);
+
+        self.category = ko.observable(category);
+        self.onSaveServiceCategory = function ()
+        {
+            var operation = {};
+            for (var index in self.category())
+                operation[index] = self.category()[index]();
+
+            if (typeof (beforeSaveCallback) == "function")
+                beforeSaveCallback(operation);
+
+            window.AdminDataProvider.SaveOperation(operation, function ()
+            {
+                if (typeof saveCallback == "function")
+                    saveCallback(operation);
+            });
+        };
+
+        return self;
+    };
+
+    window.ServicesViewModel = function (resources)
+    {
+        var self = this;
+
+        self.services = ko.observableArray([]);
+        self.serviceCategoryModel = ko.observable(null);
+        self.serviceModel = ko.observable(null);
+        
+        self.treeNodeName = ko.observable('');
+        self.isTreeNodeService = ko.observable(false);
+
+        self.selectedNodeInfo = { node: null };
+
+        self.regionsList = ko.observableArray([]);
+        self.regionId = ko.observable(0);
+        self.citiesList = ko.computed(function ()
+        {
+            for (var i in self.regionsList())
+                if (self.regionsList()[i].Id == self.regionId())
+                    return self.regionsList()[i].cities;
+            return [];
+        });
+        self.localityId = ko.observable();
+
+        self.localityTypesList = [{ Id: window.LocalityTypes.None, Name: 'Нет' }, { Id: window.LocalityTypes.Region, Name: 'Регион' }, { Id: window.LocalityTypes.City, Name: 'Город' }];
+        self.localityTypeId = ko.observable(window.LocalityTypes.None);
+
+        self.onAddTreeNode = function ()
+        {
+            var entity = {
+                Id: 0,
+                Name: self.treeNodeName(),
+                IsService: self.isTreeNodeService(),
+                ScriptName: '',
+                TemplateName: '',
+                ParentId: null
+            };
+            window.AdminDataProvider.SaveOperation(
+                entity,
+                function (id)
+                {
+                    self.treeNodeName('');
+                    self.isTreeNodeService(false);
+                    entity.Id = id;
+                    var model = mapToModel(entity);
+                    model.trigger = model;
+                    self.services.push(model);
+                },
+                function ()
+                {
+                    alert('error');
+                }
+            );
+        };
+        self.onDeleteTreeNode = function ()
+        {
+            if (self.selectedNodeInfo.node)
+            {
+                window.AdminDataProvider.DeleteOperation(
+                    self.selectedNodeInfo.node.trigger.id,
+                    self.selectedNodeInfo.node.trigger.isService,
+                    function ()
+                    {
+                        self.serviceCategoryModel(null);
+                        self.serviceModel(null);
+                        var parent = self.selectedNodeInfo.node.parent.trigger;
+                        if (parent)
+                        {
+                            parent.children.splice(parent.children.indexOf(self.selectedNodeInfo.node.trigger), 1);
+                            self.services.valueHasMutated();
+                        }
+                        else
+                            self.services.splice(self.services().indexOf(self.selectedNodeInfo.node.trigger), 1);
+                    },
+                    function()
+                    {
+                        alert('error');
+                    }
+                );
+            }
+        };
+
+        var getOperationById = function (operations, id, isService)
+        {
+            if (!operations)
+                return null;
+            for (var i in operations)
+            {
+                if (operations[i].id == id && operations[i].isService == isService)
+                    return operations[i];
+                var op = getOperationById(operations[i].children, id, isService);
+                if (op)
+                    return op;
+            }
+            return null;
+        };
+
+        var updateLocalityIds = function (entity)
+        {
+            switch (self.localityTypeId())
+            {
+                case window.LocalityTypes.Region:
+                    self.localityId(entity.localityId);
+                    break;
+                case window.LocalityTypes.City:
+                    for (var i in self.regionsList())
+                        if (self.regionsList()[i].cities.some(function (city) { return city.Id == entity.localityId; }))
+                        {
+                            self.regionId(self.regionsList()[i].Id);
+                            break;
+                        }
+                    self.localityId(entity.localityId);
+                    break;
+            }
+        };
+
+        self.treeNodeMoved = function (event)
+        {
+            if (event.move_info.position == "inside")
+            {
+                var moveFunc;
+                if (event.move_info.moved_node.isService)
+                    moveFunc = window.AdminDataProvider.MoveService;
+                else
+                    moveFunc = window.AdminDataProvider.MoveOperation;
+                moveFunc(
+                    event.move_info.moved_node.id,
+                    event.move_info.target_node.id,
+                    function ()
+                    {
+                        var movedOp = getOperationById(self.services(), event.move_info.moved_node.id, event.move_info.moved_node.isService);
+                        var targetOp = getOperationById(self.services(), event.move_info.target_node.id, event.move_info.target_node.isService);
+                        var parentOp = getOperationById(self.services(), event.move_info.previous_parent.id, event.move_info.previous_parent.isService);
+                        if (parentOp)
+                            parentOp.children.splice(parentOp.children.indexOf(movedOp), 1);
+                        else
+                            self.services().splice(self.services().indexOf(movedOp), 1);
+                        if (targetOp.children == undefined)
+                            targetOp.children = [];
+                        targetOp.children.unshift(movedOp);
+                        self.services.valueHasMutated();
+                    },
+                    function ()
+                    {
+                        alert('error');
+                    }
+                );
+            }
+        };
+        self.treeNodeCanMoved = function (moved_node, target_node, position)
+        {
+            return position == "inside";
+        };
+        self.treeNodeClicked = function (event)
+        {
+            self.serviceCategoryModel(null);
+            self.serviceModel(null);
+            if (event.node.isService)
+            {
+                self.localityTypeId(event.node.trigger.localityTypeId == null ? window.LocalityTypes.None : event.node.trigger.localityTypeId);
+                updateLocalityIds(event.node.trigger);
+                self.serviceModel(new ServiceViewModel(mapToEntity(event.node),
+                    function (entity)
+                    {
+                        entity.LocalityTypeId = self.localityTypeId() == window.LocalityTypes.None ? null : self.localityTypeId();
+                        entity.LocalityId = self.localityId();
+                    },
+                    function (entity)
+                    {
+                        self.serviceModel(null);
+                        event.node.trigger.label = entity.Name;
+                        event.node.trigger.localityTypeId = self.localityTypeId() == window.LocalityTypes.None ? null : self.localityTypeId();
+                        event.node.trigger.localityId = self.localityId();
+                        event.node.trigger.scriptName = entity.ScriptName;
+                        event.node.trigger.templateName = entity.TemplateName;
+                        self.services.valueHasMutated();
+                    }
+                ));
+            }
+            else
+            {
+                self.localityTypeId(event.node.trigger.localityTypeId == null ? window.LocalityTypes.None : event.node.trigger.localityTypeId);
+                updateLocalityIds(event.node.trigger);
+                self.serviceCategoryModel(new ServiceCategoryViewModel(mapToEntity(event.node),
+                    function (entity)
+                    {
+                        entity.LocalityTypeId = self.localityTypeId() == window.LocalityTypes.None ? null : self.localityTypeId();
+                        entity.LocalityId = self.localityId();
+                    },
+                    function (entity)
+                    {
+                        self.serviceCategoryModel(null);
+                        event.node.trigger.label = entity.Name;
+                        event.node.trigger.localityTypeId = self.localityTypeId() == window.LocalityTypes.None ? null : self.localityTypeId();
+                        event.node.trigger.localityId = self.localityId();
+                        self.services.valueHasMutated();
+                    }
+                ));
+            }
+        };
+
+        var mapToModel = function (treeNode)
+        {
+            var model = {
+                id: treeNode.Id,
+                label: treeNode.Name,
+                isService: treeNode.IsService,
+                parentId: treeNode.ParentId,
+                localityId: treeNode.LocalityId,
+                localityInternalId: treeNode.LocalityInternalId,
+                localityTypeId: treeNode.LocalityTypeId,
+                scriptName: treeNode.ScriptName,
+                templateName: treeNode.TemplateName
+            };
+            if (treeNode.Children && treeNode.Children.length > 0)
+                model.children = mapToModels(treeNode.Children);
+            return model;
+        };
+
+        var mapToModels = function (treeNodes)
+        {
+            var res = [];
+            for (var i in treeNodes)
+            {
+                var model = mapToModel(treeNodes[i]);
+                model.trigger = model;
+                res.push(model);
+            }
+            return res;
+        };
+
+        var mapToEntity = function (model)
+        {
+            return {
+                Id: model.id || 0,
+                Name: model.name || '',
+                IsService: model.isService || false,
+                ParentId: model.parentId,
+                LocalityId: model.localityId,
+                LocalityInternalId: model.localityInternalId,
+                LocalityTypeId: model.localityTypeId,
+                ScriptName: model.scriptName,
+                TemplateName: model.templateName
+            };
+        };
+
+        var init = function ()
+        {
+            window.AdminDataProvider.GetCities(
+                0,
+                function (data)
+                {
+                    var cities = data;
+                    window.AdminDataProvider.GetRegions(
+                        function (data)
+                        {
+                            var regions = data;
+                            for (var id in regions)
+                            {
+                                regions[id].cities = cities.filter(function (city)
+                                {
+                                    return city.RegionId == regions[id].Id;
+                                });
+                            }
+                            self.regionsList(regions);
+                            window.AdminDataProvider.GetAllOperationsMenuData(
+                                function (data)
+                                {
+                                    self.services(mapToModels(JSON.parse(data)));
+                                },
+                                function ()
+                                {
+                                    alert('error');
+                                }
+                            );
+                        },
+                        function ()
+                        {
+                            alert('error');
+                        }
+                    );
+                },
+                function ()
+                {
+                    alert('error');
+                }
+            );
+        };
+
+        init();
+
+        self.refresh = function ()
+        {
+            init();
+        };
+
+        return self;
+    };
+
+
+    (function (w)
+    {
+        @*var resources = window.ResourceManager.getResources(@Html.Raw(ViewBag.Resources));
+        var settings = JSON.parse('@Html.Raw(Model.Settings.AsJson)');*@
+
+        var viewModel = new ServicesViewModel();
+        ko.applyBindings(viewModel);
+
+    })(window);
+</script>

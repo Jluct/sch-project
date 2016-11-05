@@ -1,0 +1,524 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 05/20/2015 22:34:50
+-- Generated from EDMX file: D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\InternetBank.Dal\InternetBank.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    ALTER TABLE [Accounts] DROP CONSTRAINT [FK_UserAccount];
+GO
+    ALTER TABLE [Cards] DROP CONSTRAINT [FK_AccountCard];
+GO
+    ALTER TABLE [Operations] DROP CONSTRAINT [FK_CardOperation];
+GO
+    ALTER TABLE [Operations] DROP CONSTRAINT [FK_ServiceOperation];
+GO
+    ALTER TABLE [Services] DROP CONSTRAINT [FK_ServiceCategoryService];
+GO
+    ALTER TABLE [ServiceCategories] DROP CONSTRAINT [FK_ServiceCategoryServiceCategory];
+GO
+    ALTER TABLE [ServiceParameters] DROP CONSTRAINT [FK_ServiceParameterService];
+GO
+    ALTER TABLE [Users] DROP CONSTRAINT [FK_CityUser];
+GO
+    ALTER TABLE [Services] DROP CONSTRAINT [FK_ServiceLocality];
+GO
+    ALTER TABLE [ServiceCategories] DROP CONSTRAINT [FK_ServiceCategoryLocality];
+GO
+    ALTER TABLE [Cities] DROP CONSTRAINT [FK_RegionCity];
+GO
+    ALTER TABLE [SignedServices] DROP CONSTRAINT [FK_AccountSignedService];
+GO
+    ALTER TABLE [SignedServices] DROP CONSTRAINT [FK_ServiceSignedService];
+GO
+    ALTER TABLE [ServiceParameters] DROP CONSTRAINT [FK_AccountServiceParameter];
+GO
+    ALTER TABLE [Cards] DROP CONSTRAINT [FK_CardTypeCard];
+GO
+    ALTER TABLE [SessionPasswords] DROP CONSTRAINT [FK_UserSessionPassword];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [Users];
+GO
+    DROP TABLE [Accounts];
+GO
+    DROP TABLE [Cards];
+GO
+    DROP TABLE [Operations];
+GO
+    DROP TABLE [Services];
+GO
+    DROP TABLE [ServiceCategories];
+GO
+    DROP TABLE [Localities];
+GO
+    DROP TABLE [ServiceParameters];
+GO
+    DROP TABLE [Regions];
+GO
+    DROP TABLE [Cities];
+GO
+    DROP TABLE [SignedServices];
+GO
+    DROP TABLE [CardTypes];
+GO
+    DROP TABLE [SessionPasswords];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'Users'
+CREATE TABLE [Users] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Login] nvarchar(4000)  NULL,
+    [Password] nvarchar(4000)  NULL,
+    [FIO] nvarchar(4000)  NOT NULL,
+    [PassportNumber] nvarchar(4000)  NOT NULL,
+    [PassportData] nvarchar(4000)  NOT NULL,
+    [IsBlocked] bit  NOT NULL,
+    [LoginAttempts] int  NOT NULL,
+    [IsActivated] bit  NOT NULL,
+    [IsAdmin] bit  NOT NULL,
+    [CityId] int  NOT NULL
+);
+GO
+
+-- Creating table 'Accounts'
+CREATE TABLE [Accounts] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [UserId] int  NOT NULL,
+    [Number] nvarchar(4000)  NOT NULL,
+    [OpenDate] datetime  NOT NULL,
+    [CloseDate] datetime  NOT NULL,
+    [Balance] decimal(18,0)  NOT NULL,
+    [MinBalance] decimal(18,0)  NOT NULL,
+    [Currency] int  NOT NULL,
+    [IsOpened] bit  NOT NULL
+);
+GO
+
+-- Creating table 'Cards'
+CREATE TABLE [Cards] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Number] nvarchar(4000)  NOT NULL,
+    [CreateDate] datetime  NOT NULL,
+    [ExpireDate] datetime  NOT NULL,
+    [AccountId] int  NOT NULL,
+    [IsBlocked] bit  NOT NULL,
+    [IsAttached] bit  NOT NULL,
+    [IsExpired] bit  NOT NULL,
+    [CardTypeId] int  NOT NULL
+);
+GO
+
+-- Creating table 'Operations'
+CREATE TABLE [Operations] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Date] datetime  NOT NULL,
+    [Data] nvarchar(4000)  NOT NULL,
+    [Sum] decimal(18,0)  NOT NULL,
+    [CardId] int  NOT NULL,
+    [ServiceId] int  NOT NULL
+);
+GO
+
+-- Creating table 'Services'
+CREATE TABLE [Services] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [BankDetails] nvarchar(4000)  NULL,
+    [ServiceCategoryId] int  NULL,
+    [LocalityId] int  NULL,
+    [ScriptName] nvarchar(4000)  NOT NULL,
+    [TemplateName] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'ServiceCategories'
+CREATE TABLE [ServiceCategories] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [ServiceCategoryId] int  NULL,
+    [LocalityId] int  NULL
+);
+GO
+
+-- Creating table 'Localities'
+CREATE TABLE [Localities] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [LocalityType] int  NOT NULL,
+    [LocalityId] int  NOT NULL
+);
+GO
+
+-- Creating table 'ServiceParameters'
+CREATE TABLE [ServiceParameters] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [ValueType] int  NOT NULL,
+    [DefaultValue] nvarchar(4000)  NOT NULL,
+    [ServiceId] int  NOT NULL,
+    [AccountId] int  NULL
+);
+GO
+
+-- Creating table 'Regions'
+CREATE TABLE [Regions] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'Cities'
+CREATE TABLE [Cities] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [RegionId] int  NOT NULL
+);
+GO
+
+-- Creating table 'SignedServices'
+CREATE TABLE [SignedServices] (
+    [AccountId] int  NOT NULL,
+    [ServiceId] int  NOT NULL
+);
+GO
+
+-- Creating table 'CardTypes'
+CREATE TABLE [CardTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [IconName] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'SessionPasswords'
+CREATE TABLE [SessionPasswords] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [UserId] int  NOT NULL,
+    [Password] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [Id] in table 'Users'
+ALTER TABLE [Users]
+ADD CONSTRAINT [PK_Users]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Accounts'
+ALTER TABLE [Accounts]
+ADD CONSTRAINT [PK_Accounts]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Cards'
+ALTER TABLE [Cards]
+ADD CONSTRAINT [PK_Cards]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Operations'
+ALTER TABLE [Operations]
+ADD CONSTRAINT [PK_Operations]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Services'
+ALTER TABLE [Services]
+ADD CONSTRAINT [PK_Services]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'ServiceCategories'
+ALTER TABLE [ServiceCategories]
+ADD CONSTRAINT [PK_ServiceCategories]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Localities'
+ALTER TABLE [Localities]
+ADD CONSTRAINT [PK_Localities]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'ServiceParameters'
+ALTER TABLE [ServiceParameters]
+ADD CONSTRAINT [PK_ServiceParameters]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Regions'
+ALTER TABLE [Regions]
+ADD CONSTRAINT [PK_Regions]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Cities'
+ALTER TABLE [Cities]
+ADD CONSTRAINT [PK_Cities]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [AccountId], [ServiceId] in table 'SignedServices'
+ALTER TABLE [SignedServices]
+ADD CONSTRAINT [PK_SignedServices]
+    PRIMARY KEY ([AccountId], [ServiceId] );
+GO
+
+-- Creating primary key on [Id] in table 'CardTypes'
+ALTER TABLE [CardTypes]
+ADD CONSTRAINT [PK_CardTypes]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'SessionPasswords'
+ALTER TABLE [SessionPasswords]
+ADD CONSTRAINT [PK_SessionPasswords]
+    PRIMARY KEY ([Id] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [UserId] in table 'Accounts'
+ALTER TABLE [Accounts]
+ADD CONSTRAINT [FK_UserAccount]
+    FOREIGN KEY ([UserId])
+    REFERENCES [Users]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserAccount'
+CREATE INDEX [IX_FK_UserAccount]
+ON [Accounts]
+    ([UserId]);
+GO
+
+-- Creating foreign key on [AccountId] in table 'Cards'
+ALTER TABLE [Cards]
+ADD CONSTRAINT [FK_AccountCard]
+    FOREIGN KEY ([AccountId])
+    REFERENCES [Accounts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AccountCard'
+CREATE INDEX [IX_FK_AccountCard]
+ON [Cards]
+    ([AccountId]);
+GO
+
+-- Creating foreign key on [CardId] in table 'Operations'
+ALTER TABLE [Operations]
+ADD CONSTRAINT [FK_CardOperation]
+    FOREIGN KEY ([CardId])
+    REFERENCES [Cards]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CardOperation'
+CREATE INDEX [IX_FK_CardOperation]
+ON [Operations]
+    ([CardId]);
+GO
+
+-- Creating foreign key on [ServiceId] in table 'Operations'
+ALTER TABLE [Operations]
+ADD CONSTRAINT [FK_ServiceOperation]
+    FOREIGN KEY ([ServiceId])
+    REFERENCES [Services]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ServiceOperation'
+CREATE INDEX [IX_FK_ServiceOperation]
+ON [Operations]
+    ([ServiceId]);
+GO
+
+-- Creating foreign key on [ServiceCategoryId] in table 'Services'
+ALTER TABLE [Services]
+ADD CONSTRAINT [FK_ServiceCategoryService]
+    FOREIGN KEY ([ServiceCategoryId])
+    REFERENCES [ServiceCategories]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ServiceCategoryService'
+CREATE INDEX [IX_FK_ServiceCategoryService]
+ON [Services]
+    ([ServiceCategoryId]);
+GO
+
+-- Creating foreign key on [ServiceCategoryId] in table 'ServiceCategories'
+ALTER TABLE [ServiceCategories]
+ADD CONSTRAINT [FK_ServiceCategoryServiceCategory]
+    FOREIGN KEY ([ServiceCategoryId])
+    REFERENCES [ServiceCategories]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ServiceCategoryServiceCategory'
+CREATE INDEX [IX_FK_ServiceCategoryServiceCategory]
+ON [ServiceCategories]
+    ([ServiceCategoryId]);
+GO
+
+-- Creating foreign key on [ServiceId] in table 'ServiceParameters'
+ALTER TABLE [ServiceParameters]
+ADD CONSTRAINT [FK_ServiceParameterService]
+    FOREIGN KEY ([ServiceId])
+    REFERENCES [Services]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ServiceParameterService'
+CREATE INDEX [IX_FK_ServiceParameterService]
+ON [ServiceParameters]
+    ([ServiceId]);
+GO
+
+-- Creating foreign key on [CityId] in table 'Users'
+ALTER TABLE [Users]
+ADD CONSTRAINT [FK_CityUser]
+    FOREIGN KEY ([CityId])
+    REFERENCES [Cities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CityUser'
+CREATE INDEX [IX_FK_CityUser]
+ON [Users]
+    ([CityId]);
+GO
+
+-- Creating foreign key on [LocalityId] in table 'Services'
+ALTER TABLE [Services]
+ADD CONSTRAINT [FK_ServiceLocality]
+    FOREIGN KEY ([LocalityId])
+    REFERENCES [Localities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ServiceLocality'
+CREATE INDEX [IX_FK_ServiceLocality]
+ON [Services]
+    ([LocalityId]);
+GO
+
+-- Creating foreign key on [LocalityId] in table 'ServiceCategories'
+ALTER TABLE [ServiceCategories]
+ADD CONSTRAINT [FK_ServiceCategoryLocality]
+    FOREIGN KEY ([LocalityId])
+    REFERENCES [Localities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ServiceCategoryLocality'
+CREATE INDEX [IX_FK_ServiceCategoryLocality]
+ON [ServiceCategories]
+    ([LocalityId]);
+GO
+
+-- Creating foreign key on [RegionId] in table 'Cities'
+ALTER TABLE [Cities]
+ADD CONSTRAINT [FK_RegionCity]
+    FOREIGN KEY ([RegionId])
+    REFERENCES [Regions]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RegionCity'
+CREATE INDEX [IX_FK_RegionCity]
+ON [Cities]
+    ([RegionId]);
+GO
+
+-- Creating foreign key on [AccountId] in table 'SignedServices'
+ALTER TABLE [SignedServices]
+ADD CONSTRAINT [FK_AccountSignedService]
+    FOREIGN KEY ([AccountId])
+    REFERENCES [Accounts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [ServiceId] in table 'SignedServices'
+ALTER TABLE [SignedServices]
+ADD CONSTRAINT [FK_ServiceSignedService]
+    FOREIGN KEY ([ServiceId])
+    REFERENCES [Services]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ServiceSignedService'
+CREATE INDEX [IX_FK_ServiceSignedService]
+ON [SignedServices]
+    ([ServiceId]);
+GO
+
+-- Creating foreign key on [AccountId] in table 'ServiceParameters'
+ALTER TABLE [ServiceParameters]
+ADD CONSTRAINT [FK_AccountServiceParameter]
+    FOREIGN KEY ([AccountId])
+    REFERENCES [Accounts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AccountServiceParameter'
+CREATE INDEX [IX_FK_AccountServiceParameter]
+ON [ServiceParameters]
+    ([AccountId]);
+GO
+
+-- Creating foreign key on [CardTypeId] in table 'Cards'
+ALTER TABLE [Cards]
+ADD CONSTRAINT [FK_CardTypeCard]
+    FOREIGN KEY ([CardTypeId])
+    REFERENCES [CardTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CardTypeCard'
+CREATE INDEX [IX_FK_CardTypeCard]
+ON [Cards]
+    ([CardTypeId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'SessionPasswords'
+ALTER TABLE [SessionPasswords]
+ADD CONSTRAINT [FK_UserSessionPassword]
+    FOREIGN KEY ([UserId])
+    REFERENCES [Users]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserSessionPassword'
+CREATE INDEX [IX_FK_UserSessionPassword]
+ON [SessionPasswords]
+    ([UserId]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

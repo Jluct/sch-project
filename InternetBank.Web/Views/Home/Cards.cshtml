@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Cards";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/CustomGrid.js")"></script>
+
+<h2>Карточки</h2>
+
+<table>
+    <tr>
+        <td><a data-bind="attr: { href: selectedCardId() == undefined ? '' : '@Url.Action("AttachCard", "Home")?cardId=' + selectedCardId() }">Привязать</a></td>
+        <td><a data-bind="attr: { href: selectedCardId() == undefined ? '' : '@Url.Action("DetachCard", "Home")?cardId=' + selectedCardId() }">Отвязать</a></td>
+    </tr>
+    <tr>
+        <td><a data-bind="attr: { href: selectedCardId() == undefined ? '' : '@Url.Action("BlockCard", "Home")?cardId=' + selectedCardId() }">Блокировать</a></td>
+        <td><a data-bind="attr: { href: selectedCardId() == undefined ? '' : '@Url.Action("UnblockCard", "Home")?cardId=' + selectedCardId() }">Разблокировать</a></td>
+    </tr>
+</table>
+
+<style>
+    .cardsTable .selected {
+        background-color: lightgray;
+    }
+    .userCard {
+        float: left;
+        padding: 10px;
+    }
+    .userCard>div {
+        position: relative;
+    }
+    .userCard label {
+        position: absolute; 
+        left: 10px; 
+        top: 80px;
+        width: auto; 
+        font-size: 17pt;
+        background-color: white;
+        padding: 0px 8px;
+    }
+    .userCard.selected {
+        background-color: lightgray;
+    }
+    .clearfix {
+        clear: both;
+    }
+</style>
+
+<div>
+    <!-- ko foreach: cards -->
+    <div class="userCard" data-bind="click: function () { $parent.selectedCardId(Id); }, css: { selected: Id == $parent.selectedCardId() }">
+        <div>
+            <img data-bind="attr: { src: CardType.IconName }" width="300" />
+            <label class="number" data-bind="html: $parent.hideAccountNumber(Number) + '<BR>' + CardType.Name + '<BR>' + (IsBlocked ? 'Заблокирована' : (IsAttached ? 'Привязана' : 'Не привязана'))"></label>
+        </div>
+    </div>
+    <!-- /ko -->
+    <div class="clearfix"></div>
+</div>
+@{
+    var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var cardsInfoJson = jss.Serialize(ViewBag.Cards);
+}
+
+<script type="text/javascript">
+    (function (w)
+    {
+        @*var resources = window.ResourceManager.getResources(@Html.Raw(ViewBag.Resources));
+        var settings = JSON.parse('@Html.Raw(Model.Settings.AsJson)');*@
+
+        ko.applyBindings(new function ()
+        {
+            var self = this;
+
+            self.selectedCardId = ko.observable();
+            self.cards = ko.observableArray(JSON.parse('@Html.Raw(cardsInfoJson)'));
+            self.hideAccountNumber = function (number)
+            {
+                return number[0] + "*** **** **** " + number.substr(number.length - 4);
+            };
+
+            return self;
+        });
+
+    })(window);
+</script>

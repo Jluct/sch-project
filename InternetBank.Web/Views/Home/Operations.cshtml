@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Совершенные операции";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+}
+
+<style>
+    .operations {
+        border-collapse:collapse;
+    }
+    .operations td {
+        padding: 5px 10px;
+    }
+    .operations thead td {
+        font-weight: 800;
+    }
+</style>
+
+<h2>Совершенные операции</h2>
+
+@{
+    var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var operationsJson = jss.Serialize(ViewBag.Operations);
+}
+
+<table class="operations">
+    <thead>
+        <tr>
+            <td>Дата и время операции</td>
+            <td>Карт-счет</td>
+            <td>Тип карт-счета</td>
+            <td>Название операции</td>
+            <td>Данные платежа</td>
+            <td>Валюта</td>
+            <td>Сумма</td>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: operations">
+        <tr>
+            <td data-bind="text: Date"></td>
+            <td data-bind="text: $parent.hideAccountNumber(CardNumber)"></td>
+            <td data-bind="text: CardType"></td>
+            <td data-bind="text: OperationName"></td>
+            <td data-bind="text: OperationData"></td>
+            <td data-bind="text: Currency"></td>
+            <td data-bind="text: Sum"></td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    (function (w)
+    {
+        @*var resources = window.ResourceManager.getResources(@Html.Raw(ViewBag.Resources));
+        var settings = JSON.parse('@Html.Raw(Model.Settings.AsJson)');*@
+
+        ko.applyBindings(new function ()
+        {
+            var self = this;
+
+            self.operations = ko.observableArray(JSON.parse('@Html.Raw(operationsJson)'));
+            self.hideAccountNumber = function (number)
+            {
+                return number[0] + "*** **** **** " + number.substr(number.length - 4);
+            };
+
+            return self;
+        });
+
+    })(window);
+</script>

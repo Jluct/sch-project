@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+}
+
+<style>
+    .noBalance {
+        background-image: url(/Content/Images/update.png);
+        background-size: 21px;
+        background-repeat: no-repeat;
+    }
+    .orange {
+        color: rgb(255, 174, 0);
+        font-weight: 800;
+    }
+    .cards {
+        border-collapse:collapse;
+    }
+    .cards td {
+        padding: 5px 10px;
+    }
+    .cards thead td {
+        font-weight: 800;
+    }
+</style>
+
+<h2>Главная</h2>
+
+<table width="100%">
+    <tr>
+        <td>
+            <b>@ViewBag.UserFIO,</b><br />
+            Добро пожаловать в систему
+
+            <h2>Ваши карточки</h2>
+        </td>
+        <td>
+            <div style="text-align: right;margin-right: 10px;">
+                <iframe src="http://www.nbrb.by/publications/wmastersd.asp?lan=ru, datatype=2, fnt='Tahoma, Arial', fntsize=11px, fntcolor=555555, lnkcolor=Maroon, bgcolor=White, brdcolor=e6e6e6"
+                    width=250 height=95 scrolling=no frameborder=0></iframe>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<table class="cards">
+    <thead>
+        <tr>
+            <td>Тип</td>
+            <td>Номер</td>
+            <td>Баланс</td>
+            <td>Неснижаемый остаток</td>
+            <td>Валюта</td>
+            <td>Срок действия</td>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: cards">
+        <tr>
+            <td data-bind="text: CardType.Name"></td>
+            <td data-bind="text: $parent.hideAccountNumber(Number)"></td>
+            <td data-bind="click: function () { $parent.loadBalance($data); }, css: { noBalance: Balance() == undefined }"><label data-bind="text: Balance()" ></label></td>
+            <td data-bind="text: MinBalance"></td>
+            <td data-bind="text: Currency"></td>
+            <td data-bind="text: ExpireDate"></td>
+        </tr>
+    </tbody>
+</table>
+
+<br />
+<br />
+@Html.Partial("_PartialSecurityRules")
+
+
+@{
+    var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var cardsInfoJson = jss.Serialize(ViewBag.Cards);
+}
+
+<script type="text/javascript">
+    (function (w)
+    {
+        @*var resources = window.ResourceManager.getResources(@Html.Raw(ViewBag.Resources));
+        var settings = JSON.parse('@Html.Raw(Model.Settings.AsJson)');*@
+
+        ko.applyBindings(new function ()
+        {
+            var self = this;
+
+            self.selectedCardId = ko.observable();
+            self.cards = ko.observableArray(JSON.parse('@Html.Raw(cardsInfoJson)'));
+            for(var i in self.cards())
+                self.cards()[i].Balance = ko.observable();
+            self.hideAccountNumber = function (number)
+            {
+                return number[0] + "*** **** **** " + number.substr(number.length - 4);
+            };
+
+            self.loadBalance = function (card)
+            {
+                window.DataProvider.GetBalance(
+                    card.Id,
+                    function (balance)
+                    {
+                        card.Balance(balance);
+                    },
+                    function ()
+                    {
+                        alert('error');
+                    }
+                );
+            };
+
+            return self;
+        });
+
+    })(window);
+</script>

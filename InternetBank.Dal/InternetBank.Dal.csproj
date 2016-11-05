@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D9F1E884-E3F9-4779-9EBC-7DFE8740CA9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InternetBank.Dal</RootNamespace>
+    <AssemblyName>InternetBank.Dal</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountDa.cs" />
+    <Compile Include="Card.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CardDa.cs" />
+    <Compile Include="CardType.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CardTypeDa.cs" />
+    <Compile Include="City.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CityDa.cs" />
+    <Compile Include="Currencies.cs" />
+    <Compile Include="DataProvider.cs" />
+    <Compile Include="DataProviderConfigurationSection.cs" />
+    <Compile Include="DataProviderFactory.cs" />
+    <Compile Include="IDataProvider.cs" />
+    <Compile Include="InternetBank.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternetBank.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InternetBank.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InternetBank.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternetBank.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="IUserManager.cs" />
+    <Compile Include="Locality.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LocalityDa.cs" />
+    <Compile Include="LocalityTypes.cs" />
+    <Compile Include="Operation.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OperationDa.cs" />
+    <Compile Include="PartialEntities\Account.cs" />
+    <Compile Include="PartialEntities\Card.cs" />
+    <Compile Include="PartialEntities\City.cs" />
+    <Compile Include="PartialEntities\Locality.cs" />
+    <Compile Include="PartialEntities\Operation.cs" />
+    <Compile Include="PartialEntities\Region.cs" />
+    <Compile Include="PartialEntities\Service.cs" />
+    <Compile Include="PartialEntities\ServiceCategory.cs" />
+    <Compile Include="PartialEntities\ServiceParameter.cs" />
+    <Compile Include="PartialEntities\CardType.cs" />
+    <Compile Include="PartialEntities\SessionPassword.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PartialEntities\User.cs" />
+    <Compile Include="Region.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegionDa.cs" />
+    <Compile Include="Service.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceCategory.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceCategoryDa.cs" />
+    <Compile Include="ServiceDa.cs" />
+    <Compile Include="ServiceParameter.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceParameterDa.cs" />
+    <Compile Include="ServiceParameterValueTypes.cs" />
+    <Compile Include="SessionPassword.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SessionPasswordDa.cs" />
+    <Compile Include="SignedService.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SignedServiceDa.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>InternetBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserDa.cs" />
+    <Compile Include="UserManager.cs" />
+    <Compile Include="UserManagerConfigurationSection.cs" />
+    <Compile Include="UserManagerFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="InternetBank.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InternetBank.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="InternetBank.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InternetBank.edmx</DependentUpon>
+      <LastGenOutput>InternetBank.Context.cs</LastGenOutput>
+    </None>
+    <None Include="InternetBank.edmx.diagram">
+      <DependentUpon>InternetBank.edmx</DependentUpon>
+    </None>
+    <None Include="InternetBank.edmx.sqlce" />
+    <None Include="InternetBank.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InternetBank.edmx</DependentUpon>
+      <LastGenOutput>InternetBank.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{33439ce8-0db4-48ad-b266-ec59090724fd}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EfDao\EfDao.csproj">
+      <Project>{74b68d96-ac90-47cb-a5b8-0181ddbe181d}</Project>
+      <Name>EfDao</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

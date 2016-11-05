@@ -1,0 +1,196 @@
+﻿@{
+    ViewBag.Title = "Cards";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/CustomGrid.js")"></script>
+
+<h2>Настройки</h2>
+
+<style>
+    .errorMessage {
+        color: red;
+    }
+</style>
+
+<fieldset>
+    <legend>Смена пароля</legend>
+    <br /><label>Старый пароль:</label><br />
+    <input type="password" data-bind="value: oldPassword" /><br />
+    <label>Новый пароль:</label><br />
+    <input type="password" data-bind="value: newPassword1" /><br />
+    <label>Новый пароль:</label><br />
+    <input type="password" data-bind="value: newPassword2" /><br /><br />
+    <!-- ko if: changePasswordErrorMesssage() -->
+    <label class="errorMessage" data-bind="html: changePasswordErrorMesssage"></label><br /><br />
+    <!-- /ko -->
+    <input type="button" value="Сменить" data-bind="click: onChangePassword, enable: newPassword1() == newPassword2() && oldPassword().length > 0 && newPassword1().length > 0" />
+</fieldset>
+
+<fieldset>
+    <legend>Место проживания</legend>
+    <br /><label>Область:</label><br />
+    <select data-bind="options: regions, value: regionId, optionsText: 'Name', optionsValue: 'Id'"></select><br />
+    <label>Город:</label><br />
+    <select data-bind="options: cities, value: cityId, optionsText: 'Name', optionsValue: 'Id'"></select><br /><br />
+    <!-- ko if: changeLocalityErrorMesssage() -->
+    <label class="errorMessage" data-bind="html: changeLocalityErrorMesssage"></label><br /><br />
+    <!-- /ko -->
+    <input type="button" value="Сменить" data-bind="click: onChangeLocality, enable: cityId() > 0" />
+</fieldset>
+
+<fieldset>
+    <legend>Минимальный остаток</legend>
+    <br /><label>Карта:</label><br />
+    <select data-bind="options: cards, value: cardId, optionsText: 'Number', optionsValue: 'Id'"></select><br />
+    <label>Значение:</label><br />
+    <input data-bind="spinner: { value: minBalance, options: { min: 0, precision: 0 } }" /><br /><br />
+    <!-- ko if: changeMinBalanceErrorMesssage() -->
+    <label class="errorMessage" data-bind="html: changeMinBalanceErrorMesssage"></label><br /><br />
+    <!-- /ko -->
+    <input type="button" value="Сменить" data-bind="click: onChangeMinBalance, enable: cardId() > 0" />
+</fieldset>
+
+@{
+    var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var regionsJson = jss.Serialize(ViewBag.Regions);
+    var cardsInfoJson = jss.Serialize(ViewBag.Cards);
+}
+
+<script type="text/javascript">
+    (function (w)
+    {
+        @*var resources = window.ResourceManager.getResources(@Html.Raw(ViewBag.Resources));
+        var settings = JSON.parse('@Html.Raw(Model.Settings.AsJson)');*@
+
+        ko.applyBindings(new function ()
+        {
+            var self = this;
+
+            @*
+            self.selectedCardId = ko.observable();
+            self.cards = ko.observableArray(JSON.parse('@Html.Raw(cardsInfoJson)'));
+            *@
+
+            self.regions = ko.observableArray(JSON.parse('@Html.Raw(regionsJson)'));
+            self.regionId = ko.observable(@ViewBag.RegionId);
+            self.cities = ko.observableArray([]);
+            self.cityId = ko.observable();
+            self.changeLocalityErrorMesssage = ko.observable('');
+
+            self.regionId.subscribe(function ()
+            {
+                window.DataProvider.GetRegionCities(
+                    self.regionId(),
+                    function (data)
+                    {
+                        var cityNotInit = self.cityId() == undefined;
+                        self.cities(data);
+                        if (cityNotInit)
+                            self.cityId(@ViewBag.CityId);
+                    },
+                    function ()
+                    {
+                        alert('error');
+                    }
+                );
+            });
+
+            self.regionId.valueHasMutated();
+
+            self.onChangeLocality = function ()
+            {
+                self.changeLocalityErrorMesssage('');
+                window.DataProvider.ChangeLocality(
+                    self.cityId(),
+                    function (errors)
+                    {
+                        if (errors.length > 0)
+                            self.changeLocalityErrorMesssage(errors.join('<BR />'));
+                    },
+                    function ()
+                    {
+                        self.changeLocalityErrorMesssage('Произошла ошибка');
+                    }
+                );
+            };
+
+
+
+            self.oldPassword = ko.observable('');
+            self.newPassword1 = ko.observable('');
+            self.newPassword2 = ko.observable('');
+            self.changePasswordErrorMesssage = ko.observable('');
+
+            self.onChangePassword = function ()
+            {
+                self.changePasswordErrorMesssage('');
+                window.DataProvider.ChangePassword(
+                    self.oldPassword(),
+                    self.newPassword1(),
+                    function (errors)
+                    {
+                        if (errors.length > 0)
+                            self.changePasswordErrorMesssage(errors.join('<BR />'));
+                        else
+                        {
+                            self.oldPassword('');
+                            self.newPassword1('');
+                            self.newPassword2('');
+                        }
+                    },
+                    function ()
+                    {
+                        self.changePasswordErrorMesssage('Произошла ошибка');
+                    }
+                );
+            };
+
+            self.changeMinBalanceErrorMesssage = ko.observable('');
+            var hideAccountNumber = function (number)
+            {
+                return number[0] + "*** **** **** " + number.substr(number.length - 4);
+            };
+            self.balance = ko.observable(0);
+            self.minBalance = ko.observable();
+            self.cardId = ko.observable();
+            self.cardId.subscribe(function (newVal)
+            {
+                for (var i in self.cards())
+                {
+                    if (self.cards()[i].Id == newVal)
+                    {
+                        self.balance(self.cards()[i].Balance);
+                        self.minBalance(self.cards()[i].MinBalance);
+                    }
+                }
+            });
+            self.cards = ko.observableArray(JSON.parse('@Html.Raw(cardsInfoJson)'));
+            for (var i in self.cards())
+                self.cards()[i].Number = hideAccountNumber(self.cards()[i].Number);
+            self.onChangeMinBalance = function ()
+            {
+                window.DataProvider.SetMinBalance(
+                    self.cardId(),
+                    self.minBalance(),
+                    function (errors)
+                    {
+                        if (errors.length > 0)
+                            self.changeMinBalanceErrorMesssage(errors.join('<BR />'));
+                        else
+                        {
+                            self.minBalance(self.minBalance());
+                        }
+                    },
+                    function ()
+                    {
+                    }
+                );
+            };
+
+
+            return self;
+        });
+
+    })(window);
+</script>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="InternetBank.Controllers.AdminController">
+    <Position X="3.25" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>MUoBhgAAAAwEAIMFAIAQSAAQESgQACABEEEAMYAKEJA=</HashCode>
+      <FileName>Controllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Controllers.ServiceController">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAQAAEAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Controllers\ServiceController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.HomeController">
+    <Position X="5.75" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IQAABAwAAAAEiBCAAoAAAAAIAAAAAAAAgIGAAAIAABA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.UserController">
+    <Position X="5.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CACABAAAAAgAAAAQAABEAAAAAAABAAAEAAAAAAQAAAA=</HashCode>
+      <FileName>Controllers\UserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.AccountModel">
+    <Position X="10.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAEAAAAgAEAAAEAAAABAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.CardModel">
+    <Position X="10.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAGAAAIAAAAAAAAAkAAAAAAAAAAAgAAAAABAAAAAgA=</HashCode>
+      <FileName>Models\CardModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.CardTypeModel">
+    <Position X="10.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CardTypeModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.CityModel">
+    <Position X="12.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CityModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.LogOnModel">
+    <Position X="6" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>Models\LogOnModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.OperationMenuItemModel">
+    <Position X="8.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAAAACAAAAAAAAEAQQgACAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\OperationMenuItemModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.RegionModel">
+    <Position X="8.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\RegionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.RegistrationModel">
+    <Position X="6" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMA=</HashCode>
+      <FileName>Models\RegistrationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.ServiceParameterModel">
+    <Position X="10.5" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Models\ServiceParameterModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.SessionPasswordModel">
+    <Position X="10.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SessionPasswordModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Models.UserModel">
+    <Position X="8.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAABAAAAAACAAAAAAAAACAAAAgACgAAQAAAAAIA=</HashCode>
+      <FileName>Models\UserModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Mappers.AccountMapper">
+    <Position X="10.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAEAAACAAAAEAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mappers\AccountMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Mappers.CardMapper">
+    <Position X="8.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAEAAACAAAAEAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mappers\CardMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.DataProvider" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3.25" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.UserManager" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Common.Mapper&lt;TEntity, TModel&gt;">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

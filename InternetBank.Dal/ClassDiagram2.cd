@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="InternetBank.Dal.AccountDa">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AccountDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.CardDa">
+    <Position X="15" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CardDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.CardTypeDa">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CardTypeDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.CityDa">
+    <Position X="2.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CityDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.DataProvider" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AFgBjgAAAiAAAOMICIkACAAQUCAALCAAMZAAMUoKWEA=</HashCode>
+      <FileName>DataProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.DataProviderConfigurationSection" Collapsed="true">
+    <Position X="24" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAACACAAgAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataProviderConfigurationSection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.DataProviderFactory">
+    <Position X="9.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAABAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataProviderFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.InternetBankContainer" Collapsed="true">
+    <Position X="24.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>0AAAASACAAgAAAAAAAAAEAIIEAgAAACAAAAAAEAAAAA=</HashCode>
+      <FileName>InternetBank.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.Account" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAADAAAAAAgAAAAAgEgAAAgIEAAAEAAAABAAAAAAAAA=</HashCode>
+      <FileName>Account.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.Card" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAGAAAKAAAAAAAAgkAAAAAAAAgAAgAAAAABAAAAAkA=</HashCode>
+      <FileName>Card.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.CardType" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAQIAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CardType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.City" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGACAAgAAAAAAAgAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>City.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.Locality" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAACAAAAAAAAAAAAgAAAAAIgAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Locality.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.Operation" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCACAAAAAAAAAAgAAAAAAAAAAAQBABAAAAAAgAAAQ=</HashCode>
+      <FileName>Operation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.Region" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAAAgAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Region.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.921" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.Service" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="9.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>QAACAAACAAiAAAQAgAAAAQQggAAAAAAAAAAAAAAAEgA=</HashCode>
+      <FileName>Service.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.ServiceCategory" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gAACAAAAAAAAAAAAgAAAQAYggAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>ServiceCategory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.ServiceParameter" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAAAAAAggAAAAQAAABAQAAAAAAAAAAAEEA=</HashCode>
+      <FileName>ServiceParameter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.SessionPassword" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAgAAAAAgAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>SessionPassword.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.SignedService" Collapsed="true">
+    <Position X="23.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAEA=</HashCode>
+      <FileName>SignedService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.User" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAABQAAAAACIgAAAEAAACAAAAgCCgAAQAAAAAIA=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.LocalityDa">
+    <Position X="3.25" Y="8.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LocalityDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.RegionDa">
+    <Position X="10" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RegionDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.ServiceCategoryDa">
+    <Position X="3" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAgAACAAACAAAAAAAAAEAAAAAIAAAAAAACAA=</HashCode>
+      <FileName>ServiceCategoryDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.ServiceDa">
+    <Position X="13.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAGAAAEAAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>ServiceDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.ServiceParameterDa">
+    <Position X="11.25" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ServiceParameterDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.SessionPasswordDa">
+    <Position X="8.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SessionPasswordDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.SignedServiceDa" Collapsed="true">
+    <Position X="25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SignedServiceDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.UserDa">
+    <Position X="6.5" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>UserDa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.UserManager" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAgAAAAEAACAAAAAAAAAAAABAAAAAAAAAIg=</HashCode>
+      <FileName>UserManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="InternetBank.Dal.UserManagerConfigurationSection">
+    <Position X="24.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAACAAACACAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>UserManagerConfigurationSection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetBank.Dal.UserManagerFactory">
+    <Position X="16.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserManagerFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="InternetBank.Dal.IDataProvider">
+    <Position X="7.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgBigAAAiAAAOMIAIEACAAQUCAAACAAEZAAMUoKWEA=</HashCode>
+      <FileName>IDataProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="InternetBank.Dal.IUserManager">
+    <Position X="12" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAgAAAAEAACAAAAAAAAAAAAAAAAAAAAAAIg=</HashCode>
+      <FileName>IUserManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="InternetBank.Dal.LocalityTypes" Collapsed="true">
+    <Position X="23.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LocalityTypes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="InternetBank.Dal.ServiceParameterValueTypes">
+    <Position X="23.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAAQAAAAAAAAAAAAAABAAAAAAAAACA=</HashCode>
+      <FileName>ServiceParameterValueTypes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

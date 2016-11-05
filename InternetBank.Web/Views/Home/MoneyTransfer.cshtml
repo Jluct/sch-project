@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+}
+
+<h2>Перевод денег между своими картами</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Откуда
+            </th>
+            <th></th>
+            <th>
+                Куда
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ko foreach: cards -->
+        <tr>
+            <td>
+                <input type="radio" name="from" data-bind="attr: { id: 'from'+Id }, value: self.isFromChecked, click: $parent.setFrom" /><label data-bind="attr: { for: 'from'+Id }, text: $parent.hideAccountNumber(Number) + ' ' + CardType.Name"></label>
+            </td>
+            <td width="100">
+            </td>
+            <td>
+                <input type="radio" name="to" data-bind="attr: { id: 'to'+Id }, value: self.isToChecked, click: $parent.setTo" /><label data-bind="attr: { for: 'to'+Id }, text: $parent.hideAccountNumber(Number) + ' ' + CardType.Name"></label>
+            </td>
+        </tr>
+        <!-- /ko -->
+        <tr>
+            <td colspan="3">
+                <label>Сумма:</label>&nbsp;<input data-bind="spinner: { value: sum, options: { min: 0, precision: 0 } }" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="button" value="Выполнить" data-bind="enable: sum() > 0 && selectedFromCardId() > 0 && selectedToCardId() > 0, click: onSubmit" />
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@{
+    var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var cardsInfoJson = jss.Serialize(ViewBag.Cards);
+}
+
+<script type="text/javascript">
+    (function (w)
+    {
+        @*var resources = window.ResourceManager.getResources(@Html.Raw(ViewBag.Resources));
+        var settings = JSON.parse('@Html.Raw(Model.Settings.AsJson)');*@
+
+        window.viewModel = new function ()
+        {
+            var self = this;
+
+            self.isFromChecked = ko.observable();
+            self.isToChecked = ko.observable();
+            self.selectedFromCardId = ko.observable();
+            self.selectedToCardId = ko.observable();
+            self.cards = ko.observableArray(JSON.parse('@Html.Raw(cardsInfoJson)'));
+
+            self.sum = ko.observable();
+
+            self.setFrom = function (value)
+            {
+                if (value.Id != self.selectedToCardId() || self.selectedToCardId() == undefined)
+                {
+                    self.selectedFromCardId(value.Id);
+                    return true;
+                }
+                return false;
+            };
+
+            self.setTo = function (value)
+            {
+                if (value.Id != self.selectedFromCardId() || self.selectedFromCardId() == undefined)
+                {
+                    self.selectedToCardId(value.Id);
+                    return true;
+                }
+                return false;
+            };
+
+            self.onSubmit = function ()
+            {
+                window.DataProvider.Transfer(
+                    self.selectedFromCardId(),
+                    self.selectedToCardId(),
+                    self.sum(),
+                    function (errors)
+                    {
+                        if (errors.length > 0)
+                            alert(errors[0]);
+                        else
+                        {
+                            alert("Принято на обработку");
+                            self.sum(undefined);
+                        }
+                    },
+                    function ()
+                    {
+                        alert('error');
+                    }
+                );
+            };
+
+            self.hideAccountNumber = function (number)
+            {
+                return number[0] + "*** **** **** " + number.substr(number.length - 4);
+            };
+
+            return self;
+        };
+
+        ko.applyBindings(window.viewModel);
+
+    })(window);
+</script>

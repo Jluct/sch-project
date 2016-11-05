@@ -1,0 +1,10 @@
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\Common\bin\Debug\Common.dll
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\Common\bin\Debug\Common.pdb
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\Common\obj\Debug\Common.dll
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\Common\obj\Debug\Common.pdb
+D:\БГУИР\Заказы\Диплом\Диплом\Common\bin\Debug\Common.dll
+D:\БГУИР\Заказы\Диплом\Диплом\Common\bin\Debug\Common.pdb
+D:\БГУИР\Заказы\Диплом\Диплом\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+D:\БГУИР\Заказы\Диплом\Диплом\Common\obj\Debug\Common.dll
+D:\БГУИР\Заказы\Диплом\Диплом\Common\obj\Debug\Common.pdb

@@ -1,0 +1,14 @@
+﻿<!-- ko if: sessionPasswordNumber() -->
+    <b><label data-bind="text: operationName"></label></b><br /><br />
+    <div data-bind="template: { name: operationFormTemplate(), data: operationFormViewModel }">
+    </div>
+    <!-- ko if: operationFormTemplate() -->
+    <br />
+    <label data-bind="text: 'Сеансовый ключ №' + sessionPasswordNumber()"></label><br />
+    <input type="text" data-bind="value: sessionPassword, masked: { mask: '99999999' }" /><br /><br />
+    <!-- ko if: paymentErrorMesssage() -->
+    <label class="errorMessage" data-bind="html: paymentErrorMesssage()"></label><br /><br />
+    <!-- /ko -->
+    <input type="button" value="Оплатить" data-bind="click: onSubmit" />
+    <!-- /ko -->
+<!-- /ko -->

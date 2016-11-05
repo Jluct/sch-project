@@ -1,0 +1,10 @@
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\EfDao\bin\Debug\EfDao.dll
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\EfDao\bin\Debug\EfDao.pdb
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\EfDao\obj\Debug\EfDao.csprojResolveAssemblyReference.cache
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\EfDao\obj\Debug\EfDao.dll
+D:\ДОКУМЕНТЫ\БГУИР\Заказы\Диплом\EfDao\obj\Debug\EfDao.pdb
+D:\БГУИР\Заказы\Диплом\Диплом\EfDao\bin\Debug\EfDao.dll
+D:\БГУИР\Заказы\Диплом\Диплом\EfDao\bin\Debug\EfDao.pdb
+D:\БГУИР\Заказы\Диплом\Диплом\EfDao\obj\Debug\EfDao.csprojResolveAssemblyReference.cache
+D:\БГУИР\Заказы\Диплом\Диплом\EfDao\obj\Debug\EfDao.dll
+D:\БГУИР\Заказы\Диплом\Диплом\EfDao\obj\Debug\EfDao.pdb

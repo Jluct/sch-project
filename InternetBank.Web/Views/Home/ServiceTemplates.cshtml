@@ -1,0 +1,37 @@
+﻿<script type="text/html" id="TelephoneTemplate">
+    <label>Код:</label><br />
+    <select data-bind="options: telCodes, value: code"></select><br />
+    <label>Телефон:</label><br />
+    <input type="text" data-bind="value: telephone, masked: { mask: telephoneMask, definitions: maskDefs }" /><br />
+    <label>Сумма:</label><br />
+    <input data-bind="spinner: { value: sum, options: { min: 0, precision: 0 } }" />
+</script>
+
+<script type="text/html" id="BeltelecomInternetTemplate">
+    <label>Номер:</label><br />
+    <input type="text" data-bind="value: number, masked: { mask: numberMask }" /><br />
+    <label>Сумма:</label><br />
+    <input data-bind="spinner: { value: sum, options: { min: 0, precision: 0 } }" />
+</script>
+
+<script type="text/html" id="CommunalPaymentsTemplate">
+    <label>Номер:</label><br />
+    <input type="text" data-bind="value: number, masked: { mask: numberMask, placeholder: ' ' }" /><br />
+    <label>Сумма:</label><br />
+    <input data-bind="spinner: { value: sum, options: { min: 0, precision: 0 } }" />
+</script>
+
+<script type="text/html" id="WaterElectricServiceTemplate">
+    <label>Номер:</label><br />
+    <input type="text" data-bind="value: number, masked: { mask: numberMask, placeholder: ' ' }" /><br />
+    <label>Предыдущее значение счетчика:</label><br />
+    <input data-bind="spinner: { value: prevMeterValue, options: { min: 0, max: curMeterValue, precision: 0 } }" /><br />
+    <label>Текущее значение счетчика:</label><br />
+    <input data-bind="spinner: { value: curMeterValue, options: { min: 0, precision: 0 } }" /><br /><br />
+    <label>Расход:</label><br />
+    <input type="text" data-bind="value: diff, enable: false" /><br />
+    <label>Тариф:</label><br />
+    <input type="text" data-bind="value: tariff, enable: false" /><br />
+    <label>Сумма:</label><br />
+    <input type="text" data-bind="value: sum, enable: false" />
+</script>

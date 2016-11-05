@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="InternetBank" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="InternetBankContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="InternetBank.User" />
+    <EntitySet Name="Accounts" EntityType="InternetBank.Account" />
+    <EntitySet Name="Cards" EntityType="InternetBank.Card" />
+    <EntitySet Name="Operations" EntityType="InternetBank.Operation" />
+    <EntitySet Name="Services" EntityType="InternetBank.Service" />
+    <EntitySet Name="ServiceCategories" EntityType="InternetBank.ServiceCategory" />
+    <EntitySet Name="Localities" EntityType="InternetBank.Locality" />
+    <AssociationSet Name="UserAccount" Association="InternetBank.UserAccount">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="AccountCard" Association="InternetBank.AccountCard">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Card" EntitySet="Cards" />
+    </AssociationSet>
+    <AssociationSet Name="CardOperation" Association="InternetBank.CardOperation">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="Operation" EntitySet="Operations" />
+    </AssociationSet>
+    <AssociationSet Name="ServiceOperation" Association="InternetBank.ServiceOperation">
+      <End Role="Service" EntitySet="Services" />
+      <End Role="Operation" EntitySet="Operations" />
+    </AssociationSet>
+    <AssociationSet Name="ServiceCategoryService" Association="InternetBank.ServiceCategoryService">
+      <End Role="ServiceCategory" EntitySet="ServiceCategories" />
+      <End Role="Service" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="ServiceCategoryServiceCategory" Association="InternetBank.ServiceCategoryServiceCategory">
+      <End Role="ServiceCategory" EntitySet="ServiceCategories" />
+      <End Role="ServiceCategory1" EntitySet="ServiceCategories" />
+    </AssociationSet>
+    <EntitySet Name="ServiceParameters" EntityType="InternetBank.ServiceParameter" />
+    <AssociationSet Name="ServiceParameterService" Association="InternetBank.ServiceParameterService">
+      <End Role="ServiceParameter" EntitySet="ServiceParameters" />
+      <End Role="Service" EntitySet="Services" />
+    </AssociationSet>
+    <EntitySet Name="Regions" EntityType="InternetBank.Region" />
+    <EntitySet Name="Cities" EntityType="InternetBank.City" />
+    <AssociationSet Name="CityUser" Association="InternetBank.CityUser">
+      <End Role="User" EntitySet="Users" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="ServiceLocality" Association="InternetBank.ServiceLocality">
+      <End Role="Service" EntitySet="Services" />
+      <End Role="Locality" EntitySet="Localities" />
+    </AssociationSet>
+    <AssociationSet Name="ServiceCategoryLocality" Association="InternetBank.ServiceCategoryLocality">
+      <End Role="ServiceCategory" EntitySet="ServiceCategories" />
+      <End Role="Locality" EntitySet="Localities" />
+    </AssociationSet>
+    <AssociationSet Name="RegionCity" Association="InternetBank.RegionCity">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <EntitySet Name="SignedServices" EntityType="InternetBank.SignedService" />
+    <AssociationSet Name="AccountSignedService" Association="InternetBank.AccountSignedService">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="SignedService" EntitySet="SignedServices" />
+    </AssociationSet>
+    <AssociationSet Name="ServiceSignedService" Association="InternetBank.ServiceSignedService">
+      <End Role="Service" EntitySet="Services" />
+      <End Role="SignedService" EntitySet="SignedServices" />
+    </AssociationSet>
+    <AssociationSet Name="AccountServiceParameter" Association="InternetBank.AccountServiceParameter">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="ServiceParameter" EntitySet="ServiceParameters" />
+    </AssociationSet>
+    <EntitySet Name="CardTypes" EntityType="InternetBank.CardType" />
+    <AssociationSet Name="CardTypeCard" Association="InternetBank.CardTypeCard">
+      <End Role="CardType" EntitySet="CardTypes" />
+      <End Role="Card" EntitySet="Cards" />
+    </AssociationSet>
+    <EntitySet Name="SessionPasswords" EntityType="InternetBank.SessionPassword" />
+    <AssociationSet Name="UserSessionPassword" Association="InternetBank.UserSessionPassword">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SessionPassword" EntitySet="SessionPasswords" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Login" Nullable="true" />
+    <Property Type="String" Name="Password" Nullable="true" />
+    <Property Type="String" Name="FIO" Nullable="false" />
+    <Property Type="String" Name="PassportNumber" Nullable="false" />
+    <Property Type="String" Name="PassportData" Nullable="false" />
+    <NavigationProperty Name="Accounts" Relationship="InternetBank.UserAccount" FromRole="User" ToRole="Account" />
+    <Property Type="Boolean" Name="IsBlocked" Nullable="false" DefaultValue="False" />
+    <Property Type="Int32" Name="LoginAttempts" Nullable="false" DefaultValue="0" />
+    <Property Type="Boolean" Name="IsActivated" Nullable="false" DefaultValue="False" />
+    <Property Type="Boolean" Name="IsAdmin" Nullable="false" DefaultValue="False" />
+    <NavigationProperty Name="City" Relationship="InternetBank.CityUser" FromRole="User" ToRole="City" />
+    <Property Type="Int32" Name="CityId" Nullable="false" />
+    <NavigationProperty Name="SessionPasswords" Relationship="InternetBank.UserSessionPassword" FromRole="User" ToRole="SessionPassword" />
+  </EntityType>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="User" Relationship="InternetBank.UserAccount" FromRole="Account" ToRole="User" />
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="String" Name="Number" Nullable="false" />
+    <Property Type="DateTime" Name="OpenDate" Nullable="false" />
+    <Property Type="DateTime" Name="CloseDate" Nullable="false" />
+    <Property Type="Decimal" Name="Balance" Nullable="false" />
+    <Property Type="Decimal" Name="MinBalance" Nullable="false" />
+    <Property Type="Int32" Name="Currency" Nullable="false" />
+    <Property Type="Boolean" Name="IsOpened" Nullable="false" />
+    <NavigationProperty Name="Cards" Relationship="InternetBank.AccountCard" FromRole="Account" ToRole="Card" />
+    <NavigationProperty Name="SignedServices" Relationship="InternetBank.AccountSignedService" FromRole="Account" ToRole="SignedService" />
+    <NavigationProperty Name="ServiceParameters" Relationship="InternetBank.AccountServiceParameter" FromRole="Account" ToRole="ServiceParameter" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Number" Nullable="false" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+    <Property Type="DateTime" Name="ExpireDate" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="InternetBank.AccountCard" FromRole="Card" ToRole="Account" />
+    <Property Type="Int32" Name="AccountId" Nullable="false" />
+    <NavigationProperty Name="Operations" Relationship="InternetBank.CardOperation" FromRole="Card" ToRole="Operation" />
+    <Property Type="Boolean" Name="IsBlocked" Nullable="false" />
+    <Property Type="Boolean" Name="IsAttached" Nullable="false" />
+    <Property Type="Boolean" Name="IsExpired" Nullable="false" />
+    <NavigationProperty Name="CardType" Relationship="InternetBank.CardTypeCard" FromRole="Card" ToRole="CardType" />
+    <Property Type="Int32" Name="CardTypeId" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Operation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+    <Property Type="String" Name="Data" Nullable="false" />
+    <Property Type="Decimal" Name="Sum" Nullable="false" />
+    <NavigationProperty Name="Card" Relationship="InternetBank.CardOperation" FromRole="Operation" ToRole="Card" />
+    <Property Type="Int32" Name="CardId" Nullable="false" />
+    <NavigationProperty Name="Service" Relationship="InternetBank.ServiceOperation" FromRole="Operation" ToRole="Service" />
+    <Property Type="Int32" Name="ServiceId" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Operations" Relationship="InternetBank.ServiceOperation" FromRole="Service" ToRole="Operation" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="BankDetails" Nullable="true" />
+    <NavigationProperty Name="ServiceCategory" Relationship="InternetBank.ServiceCategoryService" FromRole="Service" ToRole="ServiceCategory" />
+    <Property Type="Int32" Name="ServiceCategoryId" />
+    <NavigationProperty Name="ServiceParameters" Relationship="InternetBank.ServiceParameterService" FromRole="Service" ToRole="ServiceParameter" />
+    <NavigationProperty Name="Locality" Relationship="InternetBank.ServiceLocality" FromRole="Service" ToRole="Locality" />
+    <Property Type="Int32" Name="LocalityId" Nullable="true" />
+    <NavigationProperty Name="SignedServices" Relationship="InternetBank.ServiceSignedService" FromRole="Service" ToRole="SignedService" />
+    <Property Type="String" Name="ScriptName" Nullable="false" />
+    <Property Type="String" Name="TemplateName" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ServiceCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <NavigationProperty Name="Services" Relationship="InternetBank.ServiceCategoryService" FromRole="ServiceCategory" ToRole="Service" />
+    <NavigationProperty Name="ServiceCategories" Relationship="InternetBank.ServiceCategoryServiceCategory" FromRole="ServiceCategory" ToRole="ServiceCategory1" />
+    <NavigationProperty Name="Parent" Relationship="InternetBank.ServiceCategoryServiceCategory" FromRole="ServiceCategory1" ToRole="ServiceCategory" />
+    <Property Type="Int32" Name="ServiceCategoryId" />
+    <NavigationProperty Name="Locality" Relationship="InternetBank.ServiceCategoryLocality" FromRole="ServiceCategory" ToRole="Locality" />
+    <Property Type="Int32" Name="LocalityId" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Locality">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="LocalityType" Nullable="false" />
+    <Property Type="Int32" Name="LocalityId" Nullable="false" />
+    <NavigationProperty Name="Services" Relationship="InternetBank.ServiceLocality" FromRole="Locality" ToRole="Service" />
+    <NavigationProperty Name="ServiceCategories" Relationship="InternetBank.ServiceCategoryLocality" FromRole="Locality" ToRole="ServiceCategory" />
+  </EntityType>
+  <Association Name="UserAccount">
+    <End Type="InternetBank.User" Role="User" Multiplicity="1" />
+    <End Type="InternetBank.Account" Role="Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AccountCard">
+    <End Type="InternetBank.Account" Role="Account" Multiplicity="1" />
+    <End Type="InternetBank.Card" Role="Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CardOperation">
+    <End Type="InternetBank.Card" Role="Card" Multiplicity="1" />
+    <End Type="InternetBank.Operation" Role="Operation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Operation">
+        <PropertyRef Name="CardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ServiceOperation">
+    <End Type="InternetBank.Service" Role="Service" Multiplicity="1" />
+    <End Type="InternetBank.Operation" Role="Operation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Operation">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ServiceCategoryService">
+    <End Type="InternetBank.ServiceCategory" Role="ServiceCategory" Multiplicity="0..1" />
+    <End Type="InternetBank.Service" Role="Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="ServiceCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ServiceCategoryServiceCategory">
+    <End Type="InternetBank.ServiceCategory" Role="ServiceCategory" Multiplicity="0..1" />
+    <End Type="InternetBank.ServiceCategory" Role="ServiceCategory1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceCategory1">
+        <PropertyRef Name="ServiceCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ServiceParameter">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="Int32" Name="ValueType" Nullable="false" />
+    <Property Type="String" Name="DefaultValue" Nullable="false" />
+    <NavigationProperty Name="Service" Relationship="InternetBank.ServiceParameterService" FromRole="ServiceParameter" ToRole="Service" />
+    <Property Type="Int32" Name="ServiceId" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="InternetBank.AccountServiceParameter" FromRole="ServiceParameter" ToRole="Account" />
+    <Property Type="Int32" Name="AccountId" Nullable="true" />
+  </EntityType>
+  <Association Name="ServiceParameterService">
+    <End Type="InternetBank.ServiceParameter" Role="ServiceParameter" Multiplicity="*" />
+    <End Type="InternetBank.Service" Role="Service" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceParameter">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Region">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <NavigationProperty Name="Cities" Relationship="InternetBank.RegionCity" FromRole="Region" ToRole="City" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="InternetBank.CityUser" FromRole="City" ToRole="User" />
+    <NavigationProperty Name="Region" Relationship="InternetBank.RegionCity" FromRole="City" ToRole="Region" />
+    <Property Type="Int32" Name="RegionId" Nullable="false" />
+  </EntityType>
+  <Association Name="CityUser">
+    <End Type="InternetBank.User" Role="User" Multiplicity="*" />
+    <End Type="InternetBank.City" Role="City" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ServiceLocality">
+    <End Type="InternetBank.Service" Role="Service" Multiplicity="*" />
+    <End Type="InternetBank.Locality" Role="Locality" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Locality">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="LocalityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ServiceCategoryLocality">
+    <End Type="InternetBank.ServiceCategory" Role="ServiceCategory" Multiplicity="*" />
+    <End Type="InternetBank.Locality" Role="Locality" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Locality">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceCategory">
+        <PropertyRef Name="LocalityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RegionCity">
+    <End Type="InternetBank.Region" Role="Region" Multiplicity="1" />
+    <End Type="InternetBank.City" Role="City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="RegionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SignedService">
+    <Key>
+      <PropertyRef Name="AccountId" />
+      <PropertyRef Name="ServiceId" />
+    </Key>
+    <NavigationProperty Name="Account" Relationship="InternetBank.AccountSignedService" FromRole="SignedService" ToRole="Account" />
+    <Property Type="Int32" Name="AccountId" Nullable="false" />
+    <NavigationProperty Name="Service" Relationship="InternetBank.ServiceSignedService" FromRole="SignedService" ToRole="Service" />
+    <Property Type="Int32" Name="ServiceId" Nullable="false" />
+  </EntityType>
+  <Association Name="AccountSignedService">
+    <End Type="InternetBank.Account" Role="Account" Multiplicity="1" />
+    <End Type="InternetBank.SignedService" Role="SignedService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SignedService">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ServiceSignedService">
+    <End Type="InternetBank.Service" Role="Service" Multiplicity="1" />
+    <End Type="InternetBank.SignedService" Role="SignedService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Service">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SignedService">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AccountServiceParameter">
+    <End Type="InternetBank.Account" Role="Account" Multiplicity="0..1" />
+    <End Type="InternetBank.ServiceParameter" Role="ServiceParameter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceParameter">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CardType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="IconName" Nullable="false" />
+    <NavigationProperty Name="Cards" Relationship="InternetBank.CardTypeCard" FromRole="CardType" ToRole="Card" />
+  </EntityType>
+  <Association Name="CardTypeCard">
+    <End Type="InternetBank.CardType" Role="CardType" Multiplicity="1" />
+    <End Type="InternetBank.Card" Role="Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CardType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="CardTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SessionPassword">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="User" Relationship="InternetBank.UserSessionPassword" FromRole="SessionPassword" ToRole="User" />
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="String" Name="Password" Nullable="false" />
+  </EntityType>
+  <Association Name="UserSessionPassword">
+    <End Type="InternetBank.User" Role="User" Multiplicity="1" />
+    <End Type="InternetBank.SessionPassword" Role="SessionPassword" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SessionPassword">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

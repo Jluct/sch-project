@@ -1,0 +1,77 @@
+﻿@using InternetBank.Resources;
+
+@model InternetBank.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<style>
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<h2>Регистрация</h2>
+
+@using(Html.BeginForm("Register", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+    <table>
+        <tr>
+            <td colspan="3">
+                <label>@Html.ValidationMessage("Common")</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>@GlobalResources.PassportNumber</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.PassportNumber)
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>@GlobalResources.Login</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.Login)
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.Login)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>@GlobalResources.Password</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.Password, new { type="password"})
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.Password)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>@GlobalResources.RepeatPassword</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.RepeatPassword, new { type="password"})
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.RepeatPassword)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" onclick="document.location = '@Url.Action("LogOn", "User")'" value="@GlobalResources.Back" />&nbsp;|&nbsp;<input type="submit" value="@GlobalResources.Submit" />
+            </td>
+        </tr>
+    </table>
+   
+}

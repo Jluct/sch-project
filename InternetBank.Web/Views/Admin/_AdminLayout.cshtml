@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/admin")
+
+<table>
+    <tr>
+        <td width="300">
+            <h4>Главное меню</h4>
+            <ul>
+                <li>
+                    @Html.ActionLink("Главная", "Index", "Admin")
+                </li>
+                <li>
+                    @Html.ActionLink("Пользователи", "UsersView", "Admin")
+                </li>
+                <li>
+                    @Html.ActionLink("Локации", "LocalitiesView", "Admin")
+                </li>
+                <li>
+                    @Html.ActionLink("Услуги", "ServicesView", "Admin")
+                </li>
+                <li>
+                    @Html.ActionLink("Типы карточек", "CardTypesView", "Admin")
+                </li>
+                <li>
+                    @Html.ActionLink("Выход", "LogOff", "User")
+                </li>
+            </ul>
+        </td>
+        <td>
+            @RenderBody()
+        </td>
+    </tr>
+</table>

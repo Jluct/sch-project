@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <META HTTP-EQUIV="EXPIRES" CONTENT="0">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <META HTTP-EQUIV="Refresh" CONTENT="900;URL=@Url.Action("LogOff", "User")">
+    }
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/common")
+    @RenderSection("scripts", required: false)
+    <style type="text/css">
+
+        .desc { color:#6b6b6b;}
+        .desc a {color:#0092dd;}
+        
+        .dropdown dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; }
+        .dropdown dd { position:relative; }
+        .dropdown a, .dropdown a:visited { color:#816c5b; text-decoration:none; outline:none;}
+        .dropdown a:hover { color:#5d4617;}
+        .dropdown dt a:hover { color:#5d4617; border: 1px solid black;}
+        .dropdown dt a {background: white url(/Content/Images/arrow.png) no-repeat scroll right center; display:block; padding-right:20px;
+                        border:1px solid black; width:25px;}
+        .dropdown dt a span {cursor:pointer; display:block; padding:0px;}
+        .dropdown dd ul { background: white none repeat scroll 0 0; border:1px solid black; color:#C5C0B0; display:none;
+                          left:0px; padding:0px 0px; position:absolute; top:2px; width:auto; min-width:45px; list-style:none;}
+        .dropdown span.value { display:none;}
+        .dropdown dd ul li a { padding:8px; display:block;}
+        .dropdown dd ul li a:hover { background-color:lightgray;}
+        
+        .dropdown img.flag { border:none; vertical-align:middle; margin-left:0px; }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $(".dropdown img.flag").addClass("flagvisibility");
+
+            $(".dropdown dt a").click(function ()
+            {
+                $(".dropdown dd ul").toggle();
+            });
+
+            $(".dropdown dd ul li a").click(function ()
+            {
+                var text = $(this).html();
+                $(".dropdown dt a span").html(text);
+                $(".dropdown dd ul").hide();
+                $("#result").html("Selected value is: " + getSelectedValue("sample"));
+            });
+
+            function getSelectedValue(id)
+            {
+                return $("#" + id).find("dt a span.value").html();
+            }
+
+            $(document).bind('click', function (e)
+            {
+                var $clicked = $(e.target);
+                if (!$clicked.parents().hasClass("dropdown"))
+                    $(".dropdown dd ul").hide();
+            });
+
+            $("#flagSwitcher").click(function ()
+            {
+                $(".dropdown img.flag").toggleClass("flagvisibility");
+            });
+        });
+    </script>
+</head>
+<body>
+    <table class="layout">
+        <tr>
+            <td class="header">
+                Автоматизированная система<br />обработки банковских платежей и расчетов с физическими лицами
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @RenderBody()
+            </td>
+        </tr>
+    </table>
+    <dl id="sample" style="padding:0;margin:0;position: absolute; right: 14px; top: 15px;" class="dropdown">
+        <dt><a href="#"><span><img class="flag" src="/Content/Images/ru.png" alt="" /><span class="value">RU</span></span></a></dt>
+        <dd>
+            <ul>
+                <li><a href="#"><img class="flag" src="/Content/Images/ru.png" alt="" /><span class="value">RU</span></a></li>
+                <li><a href="#"><img class="flag" src="/Content/Images/en.png" alt="" /><span class="value">EN</span></a></li>
+                <li><a href="#"><img class="flag" src="/Content/Images/by.png" alt="" /><span class="value">BY</span></a></li>
+            </ul>
+        </dd>
+    </dl>
+</body>
+</html>

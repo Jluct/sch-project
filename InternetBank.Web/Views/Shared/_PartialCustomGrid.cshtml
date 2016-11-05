@@ -1,0 +1,70 @@
+﻿<table class="customGrid">
+    <thead>
+        <tr>
+            <!-- ko foreach: columns -->
+            <th class="headRow headColumn" data-bind="text: $data['text'] || $data['field'] || ''"></th>
+            <!-- /ko -->
+            <th class="headRow tools">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ko foreach: rows -->
+        <tr class="row" data-bind="css: { selected: $parent.selectedRow() && $parent.selectedRow().Id.value() == Id.value() }, click: function () { if (!$parent.selectedRow() || $parent.selectedRow() != $data)  $parent.selectedRow($data); return true; }">
+            <!-- ko foreach: $parents[0].columns -->
+            <td class="rowItem">
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.list -->
+                <select class="edit" data-bind="options: $parents[0][field]['list'] || $data['list'], value: $parents[0][field].value, visible: $parents[1].isItemEditing($parents[0]), optionsValue: $data['valueField'], optionsText: $data['textField']"></select>
+                <!-- /ko -->
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.string -->
+                <input class="edit" data-bind="value: $parents[0][field].value, visible: $parents[1].isItemEditing($parents[0]), masked: { mask: ($parents[0][field]['mask'] || $data['mask']), definitions: $data['definitions'] }" type="text" />
+                <!-- /ko -->
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.number -->
+                <input class="edit" data-bind="spinner: { value: $parents[0][field].value, options: { max: $parents[0][field]['max'], min: $parents[0][field]['min'], precision: $parents[0][field]['precision'] } }, visible: $parents[1].isItemEditing($parents[0])" />
+                <!-- /ko -->
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.boolean -->
+                <input class="edit" data-bind="checked: $parents[0][field].value, visible: $parents[1].isItemEditing($parents[0])" type="checkbox" />
+                <!-- /ko -->
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.image -->
+                <input class="edit" data-bind="value: $parents[0][field].value, visible: $parents[1].isItemEditing($parents[0])" type="text" />
+                <!-- /ko -->
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.date -->
+                <input data-bind="datepicker: $parents[0][field].value, visible: $parents[1].isItemEditing($parents[0])" />
+                <!-- /ko -->
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) != CustomGrid.columnTypes.html && $data["renderer"] == undefined -->
+                    <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) != CustomGrid.columnTypes.boolean -->
+                    <label class="read" data-bind="text: $parents[0][field].value, visible: !$parents[1].isItemEditing($parents[0])" ></label>
+                    <!-- /ko -->
+                    <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.boolean -->
+                    <input class="read" data-bind="checked: $parents[0][field].value, visible: !$parents[1].isItemEditing($parents[0]), enable: false" type="checkbox" />
+                    <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko if: $data["renderer"] != undefined -->
+                    <div data-bind="html: renderer($parents[0], $data), visible: !$parents[1].isItemEditing($parents[0])"></div>
+                <!-- /ko -->
+                <!-- ko if: (ko.toJS($parents[0][field]["type"]) || ko.toJS($data["type"])) == CustomGrid.columnTypes.html -->
+                <div data-bind="html: html($parents[0], $data)"></div>
+                <!-- /ko -->
+            </td>
+            <!-- /ko -->
+            <td class="tools">
+                <a class="button toolButton" href="#" data-bind="click: $parents[0].editRow.bind($parents[0]), visible: !$parents[0].isItemEditing($data)">Правка</a> 
+                <a class="button toolButton" href="#" data-bind="click: $parents[0].applyRow.bind($parents[0]), visible: $parents[0].isItemEditing($data)">Принять</a>
+            </td>
+            <td class="tools">
+                <a class="button toolButton" href="#" data-bind="click: $parents[0].removeRow.bind($parents[0]), visible: !$parents[0].isItemEditing($data)">Удалить</a>
+                <a class="button toolButton" href="#" data-bind="click: $parents[0].cancelEdit.bind($parents[0]), visible: $parents[0].isItemEditing($data)">Отменить</a>
+            </td>
+        </tr>
+        <!-- /ko -->
+    </tbody>
+</table>
+<div class="customGridPager">
+    <a href="#" data-bind='click: (function () { changePage(1); })'>&lt;&lt;</a>
+    <a href="#" data-bind='click: (function () { changePage(pager.page() - 1); })'>&lt;</a>
+    <!-- ko foreach: (new Array(pager.pagesCount())) -->
+        <a href="#" data-bind='css: { "current": $parent.pager.page() == $index() + 1 }, text: $index() + 1, click: (function () { $parent.changePage(parseInt(this)); }).bind($index() + 1)'></a>
+    <!-- /ko -->
+    <a href="#" data-bind='click: (function () { changePage(pager.page() + 1); })'>&gt;</a>
+    <a href="#" data-bind='click: (function () { changePage(pager.pagesCount()); })'>&gt;&gt;</a>
+</div>

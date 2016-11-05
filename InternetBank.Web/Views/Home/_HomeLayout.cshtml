@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table>
+    <tr>
+        <td width="300">
+            <h4>Главное меню</h4>
+            <ul>
+                <li>
+                    @Html.ActionLink("Главная", "Index", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Оплата", "Payment", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Операции", "Operations", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Карты", "Cards", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Перевод денег", "MoneyTransfer", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Настройки", "Settings", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Выход", "LogOff", "User")
+                </li>
+            </ul>
+        </td>
+        <td>
+            @RenderBody()
+        </td>
+    </tr>
+</table>

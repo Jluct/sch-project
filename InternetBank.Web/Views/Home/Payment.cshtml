@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/_HomeLayout.cshtml";
+}
+@Scripts.Render("~/bundles/home")
+
+<style>
+    .errorMessage {
+        color: red;
+    }
+</style>
+
+<h2>Оплата</h2>
+
+<table>
+    <tr>
+        <td>
+            <b><label>Счет:</label></b>
+            <select data-bind="options: accountList, value: accountId, optionsValue: 'Id', optionsText: 'Number'"></select><br /><br />
+            <!-- ko if: accountId() > 0 -->
+            @Html.Partial("_PartialOperationsMenu")
+            <!-- /ko -->
+        </td>
+        <td style="padding-left: 30px;">
+            @Html.Partial("_PartialOperationForm")
+        </td>
+    </tr>
+</table>
+
+@Html.Partial("ServiceTemplates")
+
+<script type="text/javascript">
+    (function(w) {
+        @*var resources = window.ResourceManager.getResources(@Html.Raw(ViewBag.Resources));
+        var settings = JSON.parse('@Html.Raw(Model.Settings.AsJson)');*@
+
+        var viewModel = new MainViewModel();
+        ko.applyBindings(viewModel);
+
+    })(window);
+</script>
